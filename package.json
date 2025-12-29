@@ -1,5 +1,5 @@
 {
-  "name": "@mswjs/interceptors",
+  "name": "@luca1197/mswjs-interceptors",
   "description": "Low-level HTTP/HTTPS/XHR/fetch request interception library.",
   "version": "0.40.0",
   "main": "./lib/node/index.js",
@@ -130,9 +130,12 @@
     "WebSocket",
     "presets"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mswjs/interceptors"
+    "url": "https://github.com/luca1197/fork-mswjs-interceptors.git"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.7.1",

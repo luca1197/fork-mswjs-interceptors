@@ -1,6 +1,6 @@
-[![Latest version](https://img.shields.io/npm/v/@mswjs/interceptors.svg)](https://www.npmjs.com/package/@mswjs/interceptors)
+[![Latest version](https://img.shields.io/github/package-json/v/luca1197/fork-mswjs-interceptors)](https://github.com/luca1197/fork-mswjs-interceptors/packages)
 
-# `@mswjs/interceptors`
+# `@luca1197/mswjs-interceptors`
 
 Low-level network interception library.
 
@@ -122,7 +122,10 @@ req.on('socket', (socket) => {
 ## Getting started
 
 ```bash
-npm install @mswjs/interceptors
+# in your consuming project, add this once:
+#   echo "@luca1197:registry=https://npm.pkg.github.com" >> .npmrc
+# then install:
+npm install @luca1197/mswjs-interceptors
 ```
 
 ## Interceptors
@@ -136,7 +139,7 @@ To use this library you need to choose one or multiple interceptors to apply. Th
 Use an interceptor by constructing it and attaching request/response listeners:
 
 ```js
-import { ClientRequestInterceptor } from '@mswjs/interceptors/ClientRequest'
+import { ClientRequestInterceptor } from '@luca1197/mswjs-interceptors/ClientRequest'
 
 const interceptor = new ClientRequestInterceptor()
 
@@ -169,9 +172,9 @@ All HTTP request interceptors implement the same events:
 You can combine multiple interceptors to capture requests from different request-issuing modules at once.
 
 ```js
-import { BatchInterceptor } from '@mswjs/interceptors'
-import { ClientRequestInterceptor } from '@mswjs/interceptors/ClientRequest'
-import { XMLHttpRequestInterceptor } from '@mswjs/interceptors/XMLHttpRequest'
+import { BatchInterceptor } from '@luca1197/mswjs-interceptors'
+import { ClientRequestInterceptor } from '@luca1197/mswjs-interceptors/ClientRequest'
+import { XMLHttpRequestInterceptor } from '@luca1197/mswjs-interceptors/XMLHttpRequest'
 
 const interceptor = new BatchInterceptor({
   name: 'my-interceptor',
@@ -199,8 +202,8 @@ When using [`BatchInterceptor`](#batchinterceptor), you can provide a pre-define
 This preset combines `ClientRequestInterceptor`, `XMLHttpRequestInterceptor` and is meant to be used in Node.js.
 
 ```js
-import { BatchInterceptor } from '@mswjs/interceptors'
-import nodeInterceptors from '@mswjs/interceptors/presets/node'
+import { BatchInterceptor } from '@luca1197/mswjs-interceptors'
+import nodeInterceptors from '@luca1197/mswjs-interceptors/presets/node'
 
 const interceptor = new BatchInterceptor({
   name: 'my-interceptor',
@@ -217,8 +220,8 @@ interceptor.on('request', listener)
 This preset combines `XMLHttpRequestInterceptor` and `FetchInterceptor` and is meant to be used in a browser.
 
 ```js
-import { BatchInterceptor } from '@mswjs/interceptors'
-import browserInterceptors from '@mswjs/interceptors/presets/browser'
+import { BatchInterceptor } from '@luca1197/mswjs-interceptors'
+import browserInterceptors from '@luca1197/mswjs-interceptors/presets/browser'
 
 const interceptor = new BatchInterceptor({
   name: 'my-interceptor',
@@ -384,7 +387,7 @@ You can intercept a WebSocket communication using the `WebSocketInterceptor` cla
 > This library only supports intercepting WebSocket connections created using the global WHATWG `WebSocket` class. Third-party transports, such as HTTP/XHR polling, are not supported by design due to their contrived nature.
 
 ```js
-import { WebSocketInterceptor } from '@mswjs/interceptors/WebSocket'
+import { WebSocketInterceptor } from '@luca1197/mswjs-interceptors/WebSocket'
 
 const interceptor = new WebSocketInterceptor()
 ```
@@ -563,8 +566,8 @@ class Interceptor {
 Applies multiple request interceptors at the same time.
 
 ```js
-import { BatchInterceptor } from '@mswjs/interceptors'
-import nodeInterceptors from '@mswjs/interceptors/presets/node'
+import { BatchInterceptor } from '@luca1197/mswjs-interceptors'
+import nodeInterceptors from '@luca1197/mswjs-interceptors/presets/node'
 
 const interceptor = new BatchInterceptor({
   name: 'my-interceptor',
@@ -587,8 +590,8 @@ Enables request interception in the current process while delegating the respons
 
 ```js
 // child.js
-import { RemoteHttpInterceptor } from '@mswjs/interceptors/RemoteHttpInterceptor'
-import { ClientRequestInterceptor } from '@mswjs/interceptors/ClientRequest'
+import { RemoteHttpInterceptor } from '@luca1197/mswjs-interceptors/RemoteHttpInterceptor'
+import { ClientRequestInterceptor } from '@luca1197/mswjs-interceptors/ClientRequest'
 
 const interceptor = new RemoteHttpInterceptor({
   // Alternatively, you can use presets.
@@ -611,7 +614,7 @@ Resolves an intercepted request in the given child `process`. Requires for that 
 ```js
 // parent.js
 import { spawn } from 'child_process'
-import { RemoteHttpResolver } from '@mswjs/interceptors/RemoteHttpInterceptor'
+import { RemoteHttpResolver } from '@luca1197/mswjs-interceptors/RemoteHttpInterceptor'
 
 const appProcess = spawn('node', ['app.js'], {
   stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
