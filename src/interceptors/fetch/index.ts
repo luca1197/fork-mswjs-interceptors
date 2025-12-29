@@ -58,10 +58,6 @@ export class FetchInterceptor extends Interceptor<HttpRequestEventMap> {
        */
       const inputForPassthrough = input instanceof Request ? input.clone() : resolvedInput
 
-      const initForPassthrough = init?.body instanceof ReadableStream
-        ? { ...init, body: init.body.tee()[1] } // keep one for passthrough
-        : init
-
       const request = new Request(resolvedInput, init)
 
       /**
@@ -85,9 +81,19 @@ export class FetchInterceptor extends Interceptor<HttpRequestEventMap> {
            */
           const requestCloneForResponseEvent = request.clone()
 
+          /**
+           * @note Merge any header modifications from listeners into the init.
+           * This ensures modifications like `request.headers.set()` are applied
+           * while still using the original input/init pattern for passthrough.
+           */
+          const passthroughInit: RequestInit = {
+            ...init,
+            headers: request.headers,
+          }
+
           // Perform the intercepted request as-is.
           const { error: responseError, data: originalResponse } = await until(
-            () => pureFetch(inputForPassthrough, initForPassthrough)
+            () => pureFetch(inputForPassthrough, passthroughInit)
           )
 
           if (responseError) {
