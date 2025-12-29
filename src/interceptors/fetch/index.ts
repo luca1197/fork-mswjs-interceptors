@@ -76,7 +76,7 @@ export class FetchInterceptor extends Interceptor<HttpRequestEventMap> {
 
           // Perform the intercepted request as-is.
           const { error: responseError, data: originalResponse } = await until(
-            () => pureFetch(request)
+            () => pureFetch(resolvedInput, init)
           )
 
           if (responseError) {
