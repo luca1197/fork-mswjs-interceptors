@@ -51,6 +51,17 @@ export class FetchInterceptor extends Interceptor<HttpRequestEventMap> {
           ? new URL(input, location.href)
           : input
 
+      /**
+       * @note Clone the input if it's a Request to preserve it for passthrough.
+       * Creating a new Request from a Request consumes its body, so we need
+       * to clone before that happens.
+       */
+      const inputForPassthrough = input instanceof Request ? input.clone() : resolvedInput
+
+      const initForPassthrough = init?.body instanceof ReadableStream
+        ? { ...init, body: init.body.tee()[1] } // keep one for passthrough
+        : init
+
       const request = new Request(resolvedInput, init)
 
       /**
@@ -76,7 +87,7 @@ export class FetchInterceptor extends Interceptor<HttpRequestEventMap> {
 
           // Perform the intercepted request as-is.
           const { error: responseError, data: originalResponse } = await until(
-            () => pureFetch(resolvedInput, init)
+            () => pureFetch(inputForPassthrough, initForPassthrough)
           )
 
           if (responseError) {
