@@ -117,7 +117,7 @@
     "clean": "rimraf lib",
     "build": "pnpm clean && cross-env NODE_ENV=production tsup --splitting",
     "prepare": "pnpm simple-git-hooks init",
-    "release": "release publish"
+    "release": "pnpm publish --no-git-checks"
   },
   "files": [
     "lib",
@@ -141,7 +141,6 @@
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@open-draft/test-server": "^0.5.1",
-    "@ossjs/release": "^0.10.1",
     "@playwright/test": "^1.51.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^5.0.0",
