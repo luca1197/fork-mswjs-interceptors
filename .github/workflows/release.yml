@@ -1,8 +1,8 @@
 name: release
 
 on:
-  schedule:
-    - cron: '0 23 * * *'
+  # schedule:
+  #   - cron: '0 23 * * *'
   workflow_dispatch:
 
 permissions:
@@ -21,8 +21,8 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config --local user.name "Artem Zakharchenko"
-          git config --local user.email "kettanaito@gmail.com"
+          git config --local user.name "github-actions"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
