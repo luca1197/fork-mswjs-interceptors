@@ -117,7 +117,7 @@
     "clean": "rimraf lib",
     "build": "pnpm clean && cross-env NODE_ENV=production tsup --splitting",
     "prepare": "pnpm simple-git-hooks init",
-    "release": "pnpm publish --no-git-checks"
+    "release": "npm publish --access public"
   },
   "files": [
     "lib",
@@ -131,7 +131,7 @@
     "presets"
   ],
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "repository": {
     "type": "git",

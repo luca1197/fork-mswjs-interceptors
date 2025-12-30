@@ -1,3 +1,6 @@
+> [!NOTE]
+> This is a fork of [mswjs/interceptors](https://github.com/mswjs/interceptors).
+
 [![Latest version](https://img.shields.io/github/package-json/v/luca1197/fork-mswjs-interceptors)](https://github.com/luca1197/fork-mswjs-interceptors/packages)
 
 # `@luca1197/mswjs-interceptors`
@@ -122,9 +125,6 @@ req.on('socket', (socket) => {
 ## Getting started
 
 ```bash
-# in your consuming project, add this once:
-#   echo "@luca1197:registry=https://npm.pkg.github.com" >> .npmrc
-# then install:
 npm install @luca1197/mswjs-interceptors
 ```
 

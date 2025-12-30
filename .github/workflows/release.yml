@@ -19,11 +19,11 @@ concurrency:
 
 permissions:
   contents: read
-  packages: write
+  id-token: write
 
 jobs:
   release:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     env:
       CI: '1'
     steps:
@@ -44,19 +44,17 @@ jobs:
           version: 10.26.2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
-          always-auth: true
-          registry-url: https://npm.pkg.github.com
-          scope: '@luca1197'
+          node-version: 24
+          registry-url: https://registry.npmjs.org
           cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps --only-shell
+        run: pnpm exec playwright install chromium --with-deps
 
       - name: Validate tag matches version
         run: |
@@ -78,8 +76,5 @@ jobs:
       - name: Test
         run: pnpm test
 
-      - name: Publish to GitHub Packages
-        run: pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ github.token }}
-          NPM_AUTH_TOKEN: ${{ github.token }}
+      - name: Publish to npm
+        run: npm publish --access public
